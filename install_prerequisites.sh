@@ -18,7 +18,7 @@ do
 read -r -p "Press [yY] if you want to select any specific kubernetes version and [nN] for the latest Version:  " list
 case $list in
         [yY])
-		curl -s https://packages.cloud.google.com/apt/dists/kubernetes-xenial/main/binary-amd64/Packages | grep Version | awk '{print $2}'
+		curl -s https://api.github.com/repos/kubernetes/kubernetes/releases | grep '"tag_name":' | awk -F'"' '{print $4}' | grep -v -E 'rc|beta|alpha' |  sort -Vr
 		read -r -p "Enter the Kubernetes version that you want to install example 1.22.0-00: " K8SVERSION
 		
 		echo -e "\n========== Installing kubelet kubectl kubeadm 🔗 =========="
